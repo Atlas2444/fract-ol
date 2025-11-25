@@ -6,7 +6,7 @@
 /*   By: leauvray <leauvray@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 08:35:20 by leauvray          #+#    #+#             */
-/*   Updated: 2025/11/19 08:45:07 by leauvray         ###   ########.fr       */
+/*   Updated: 2025/11/25 02:53:35 by leauvray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 //========INCLUDE========//
 # include "mlx/mlx.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
@@ -30,7 +32,7 @@
 # define JULIA 2
 # define BURNING_SHIP 3
 
-# define MAX_ITER 50
+# define MAX_ITER 20
 
 //========DEFINE-COLORS========//
 # define COLOR_BLACK 0x000000
@@ -55,6 +57,8 @@
 # define MOUSE_MIDDLE_CLICK 3
 # define MOUSE_SCROLL_UP 4
 # define MOUSE_SCROLL_DOWN 5
+# define ZOOM_UP 1.2
+# define ZOOM_DOWN 0.8
 
 //========DEFINE-EVENTS========//
 # define KEY_PRESS 2
@@ -67,7 +71,46 @@
 //========DEFINE-STRUCTURE========//
 typedef struct s_fractol
 {
-	
+	void	*mlx;
+	void	*win;
+	void	*img;
+	void	*addr;
+	char    *img_data;   // Adresse des pixels (char*)
+	int		bpp; //bits par pixel
+	int		line_len;
+	int		endian; //edianness
+
+	int		fractal_type;
+	double	min_re; //limite complexe reelle min
+	double	max_re; //la meme pour le max
+	double	min_im; // '' '' '' imaginaire min
+	double	max_im; // '' '' '' imaginaire max
+	double	julia_re; // constante julia (partie reelle)
+	double	julia_im; // constante julia (partie imaginaire)
+	int 	max_iter; //t'es pas con zbi
+	int 	color_schem;
 }	t_fractol;
+
+//========DEFINE-FONCTIONS========//
+
+//==error.c==//
+void		print_error(int num_error);
+void		malloc_error(void);
+//==parsing.c==//
+void		parse_arguments(int argc, char **argv, t_fractol *fractol);
+//==utils.c==//
+int			ft_strcmp(char *s1, char *s2);
+//==events.c==//
+void		fractol_destroy(t_fractol *fractol);
+int			key_press(int key, t_fractol *fractol);
+int			mouse_press(int key, t_fractol *fractol);
+int			close_window(t_fractol *fractol);
+void		event_init(t_fractol *fractol);
+void		zoom(t_fractol *fractol, double zoom_factor);
+//==init.c==//
+void		fractal_init(t_fractol *fractol);
+void		data_init(t_fractol *fractol);
+//==render.c==//
+void		render(t_fractol *fractol);
 
 #endif

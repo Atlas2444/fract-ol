@@ -6,8 +6,22 @@
 /*   By: leauvray <leauvray@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 08:46:32 by leauvray          #+#    #+#             */
-/*   Updated: 2025/11/17 08:47:21 by leauvray         ###   ########.fr       */
+/*   Updated: 2025/11/24 07:34:20 by leauvray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+int ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}

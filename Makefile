@@ -1,8 +1,8 @@
 NAME = fractol
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard src/*.c)
 OBJS = $(SRCS:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INC = -I.
 
 RM = rm -f
